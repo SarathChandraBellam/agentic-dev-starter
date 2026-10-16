@@ -1,0 +1,14 @@
+# secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# agent scratch space (plans for large tasks)
+.agents/work/*
+!.agents/work/.gitkeep
+
+# OS / editors
+.DS_Store
+.idea/
