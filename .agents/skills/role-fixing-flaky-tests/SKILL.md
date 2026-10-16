@@ -1,5 +1,5 @@
 ---
-name: fixing-flaky-tests
+name: role-fixing-flaky-tests
 description: Diagnoses and fixes tests that pass and fail without code changes (timing, order dependence, shared state, randomness, time zones, network). Use when a test is intermittent, fails only in CI, or fails only when run with others.
 metadata:
   type: role

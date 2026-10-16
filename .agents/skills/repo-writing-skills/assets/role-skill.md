@@ -1,5 +1,5 @@
 ---
-name: <verb-ing-noun>
+name: role-<verb-ing>-<noun>
 description: <What this role produces>. Use when <trigger situations>. Acts as the <role> role.
 metadata:
   type: role

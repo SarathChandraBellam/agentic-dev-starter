@@ -15,7 +15,7 @@ There are no CLI-specific folders, generators or sync scripts.
 AGENTS.md            # index: project, commands, quality gates, agents + tiers, skills
 .agents/
   agents/            # explorer · planner · qa-engineer · developer · code-reviewer · security-reviewer · debugger
-  skills/            # 12 skills (role, repo, and language once the stack is chosen)
+  skills/            # role-* (11) · repo-* (1) · stack-* (created when the stack is chosen)
 specs/               # per-change artifacts: spec.md · plan.md · test-cases.md · qa-report.md
 ```
 
@@ -46,8 +46,8 @@ Agents declare a tier (`strong`, `balanced` or `fast`), not a model name, so the
 
 1. Click **Use this template**, then clone.
 2. Fill in **Project**, **Stack**, **Commands** and **Quality gates** in `AGENTS.md`.
-3. Ask: *"Our stack is Python + FastAPI + pytest. Create the language skill."* (`writing-skills` creates `python-conventions`.)
-4. Ask: *"Use dev-cycle to add rate limiting to the login endpoint."*
+3. Ask: *"Our stack is Python + FastAPI + pytest. Create the stack skills."* (`repo-writing-skills` creates `stack-python`, and `stack-fastapi` if needed.)
+4. Ask: *"Use role-running-dev-cycle to add rate limiting to the login endpoint."*
 
 ## Compatibility
 

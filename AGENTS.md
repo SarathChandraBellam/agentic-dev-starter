@@ -11,7 +11,7 @@ _TBD_
 ## Stack
 
 <!-- Fill in once decided, e.g. "Python 3.12, FastAPI, PostgreSQL". -->
-_Not decided yet._ When it's decided, create the language skill (see **Language skills**).
+_Not decided yet._ When it's decided, create the stack skills (see **Stack skills**).
 
 ## Commands
 
@@ -25,7 +25,7 @@ _Not decided yet._ When it's decided, create the language skill (see **Language 
 
 ## Quality gates
 
-These run **in the repo, before merge**. `verifying-changes` runs all of them, and work is done only when all pass.
+These run **in the repo, before merge**. `role-verifying-changes` runs all of them, and work is done only when all pass.
 
 | Gate | Command | Required |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ These run **in the repo, before merge**. `verifying-changes` runs all of them, a
 ## How we work
 
 For anything non-trivial, the main agent acts as **orchestrator** and follows
-[`dev-cycle`](.agents/skills/dev-cycle/SKILL.md):
+[`role-running-dev-cycle`](.agents/skills/role-running-dev-cycle/SKILL.md):
 
 1. **Inception**: `explorer` maps the code, `planner` writes the spec and plan, and `qa-engineer` designs test cases from the
    acceptance criteria. **Gate 1:** the human approves.
@@ -57,13 +57,13 @@ subagents, play the role yourself. Only **one writer at a time**. Read-only agen
 
 | Agent | Phase | Tier | Access | Skills |
 | --- | --- | --- | --- | --- |
-| [`explorer`](.agents/agents/explorer.md) | inception | fast | read-only | exploring-codebase |
-| [`planner`](.agents/agents/planner.md) | inception | strong | read-only | writing-specs, planning-changes |
-| [`qa-engineer`](.agents/agents/qa-engineer.md) | inception + construction | balanced | tests only | designing-test-cases, writing-tests, verifying-changes, fixing-flaky-tests |
-| [`developer`](.agents/agents/developer.md) | construction | balanced | read-write | implementing-plans, writing-tests |
-| [`code-reviewer`](.agents/agents/code-reviewer.md) | construction | strong | read-only | reviewing-code |
-| [`security-reviewer`](.agents/agents/security-reviewer.md) | construction | strong | read-only | reviewing-code |
-| [`debugger`](.agents/agents/debugger.md) | any | strong | read-write | debugging-systematically, writing-tests |
+| [`explorer`](.agents/agents/explorer.md) | inception | fast | read-only | role-exploring-codebase |
+| [`planner`](.agents/agents/planner.md) | inception | strong | read-only | role-writing-specs, role-planning-changes |
+| [`qa-engineer`](.agents/agents/qa-engineer.md) | inception + construction | balanced | tests only | role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests |
+| [`developer`](.agents/agents/developer.md) | construction | balanced | read-write | role-implementing-plans, role-writing-tests |
+| [`code-reviewer`](.agents/agents/code-reviewer.md) | construction | strong | read-only | role-reviewing-code |
+| [`security-reviewer`](.agents/agents/security-reviewer.md) | construction | strong | read-only | role-reviewing-code |
+| [`debugger`](.agents/agents/debugger.md) | any | strong | read-write | role-debugging-systematically, role-writing-tests |
 
 ### Model tiers
 
@@ -79,40 +79,45 @@ If unsure, **inherit the orchestrator's model**. Escalate a task to **strong** a
 
 ## Skills
 
-Skills follow the open [Agent Skills spec](https://agentskills.io/specification). If your agent doesn't load them automatically,
+Skills follow the open [Agent Skills spec](https://agentskills.io/specification). Each name starts with its type:
+**`role-`** (how a persona works), **`repo-`** (this project's procedures), and **`stack-`** (conventions for the language,
+framework or tools). If your agent doesn't load them automatically,
 read the matching `SKILL.md` before that kind of task.
 
 ### Role skills: how each persona does its job
 
 | Skill | Persona | Use when |
 | --- | --- | --- |
-| [`dev-cycle`](.agents/skills/dev-cycle/SKILL.md) | orchestrator | building, adding, fixing or changing anything non-trivial |
-| [`exploring-codebase`](.agents/skills/exploring-codebase/SKILL.md) | explorer | "where is", "how does", or before touching unfamiliar code |
-| [`writing-specs`](.agents/skills/writing-specs/SKILL.md) | planner | requirements, acceptance criteria, user stories |
-| [`planning-changes`](.agents/skills/planning-changes/SKILL.md) | planner | design notes, task breakdown, test strategy |
-| [`designing-test-cases`](.agents/skills/designing-test-cases/SKILL.md) | qa-engineer | test cases from acceptance criteria, before code |
-| [`implementing-plans`](.agents/skills/implementing-plans/SKILL.md) | developer | executing an approved plan, test-first |
-| [`writing-tests`](.agents/skills/writing-tests/SKILL.md) | qa-engineer, developer | automating test cases, regression tests |
-| [`reviewing-code`](.agents/skills/reviewing-code/SKILL.md) | code-reviewer, security-reviewer | reviewing a diff or PR |
-| [`verifying-changes`](.agents/skills/verifying-changes/SKILL.md) | qa-engineer | the final in-repo QA gate, before done or a PR |
-| [`fixing-flaky-tests`](.agents/skills/fixing-flaky-tests/SKILL.md) | qa-engineer | intermittent or CI-only test failures |
-| [`debugging-systematically`](.agents/skills/debugging-systematically/SKILL.md) | debugger | failures whose cause isn't obvious |
+| [`role-running-dev-cycle`](.agents/skills/role-running-dev-cycle/SKILL.md) | orchestrator | building, adding, fixing or changing anything non-trivial |
+| [`role-exploring-codebase`](.agents/skills/role-exploring-codebase/SKILL.md) | explorer | "where is", "how does", or before touching unfamiliar code |
+| [`role-writing-specs`](.agents/skills/role-writing-specs/SKILL.md) | planner | requirements, acceptance criteria, user stories |
+| [`role-planning-changes`](.agents/skills/role-planning-changes/SKILL.md) | planner | design notes, task breakdown, test strategy |
+| [`role-designing-test-cases`](.agents/skills/role-designing-test-cases/SKILL.md) | qa-engineer | test cases from acceptance criteria, before code |
+| [`role-implementing-plans`](.agents/skills/role-implementing-plans/SKILL.md) | developer | executing an approved plan, test-first |
+| [`role-writing-tests`](.agents/skills/role-writing-tests/SKILL.md) | qa-engineer, developer | automating test cases, regression tests |
+| [`role-reviewing-code`](.agents/skills/role-reviewing-code/SKILL.md) | code-reviewer, security-reviewer | reviewing a diff or PR |
+| [`role-verifying-changes`](.agents/skills/role-verifying-changes/SKILL.md) | qa-engineer | the final in-repo QA gate, before done or a PR |
+| [`role-fixing-flaky-tests`](.agents/skills/role-fixing-flaky-tests/SKILL.md) | qa-engineer | intermittent or CI-only test failures |
+| [`role-debugging-systematically`](.agents/skills/role-debugging-systematically/SKILL.md) | debugger | failures whose cause isn't obvious |
 
 ### Repo skills: this repo's procedures
 
 | Skill | Use when |
 | --- | --- |
-| [`writing-skills`](.agents/skills/writing-skills/SKILL.md) | adding or changing a skill or an agent |
+| [`repo-writing-skills`](.agents/skills/repo-writing-skills/SKILL.md) | adding or changing a skill or an agent |
 
-<!-- Add repo skills as procedures emerge (e.g. adding-endpoints, running-migrations, cutting-releases).
+<!-- Add repo skills as procedures emerge (e.g. repo-adding-endpoints, repo-running-migrations, repo-cutting-releases).
      Rule: the second time a multi-step procedure is explained, make it a repo skill. -->
 
-### Language skills: conventions per language
+### Stack skills: language, framework and tool conventions
 
-_None yet._ Once the stack is decided, an agent creates `.agents/skills/<language>-conventions/SKILL.md` with `writing-skills`,
-based on the repo's real tooling, and adds it here.
+_None yet._ Once the stack is decided, an agent creates one `stack-<tech>` skill per language (and per major framework if
+needed) with `repo-writing-skills`, based on the repo's real tooling, and adds them here.
 
-<!-- e.g. | [`python-conventions`](.agents/skills/python-conventions/SKILL.md) | editing any .py file | -->
+<!-- e.g.
+| [`stack-python`](.agents/skills/stack-python/SKILL.md) | editing any .py file |
+| [`stack-fastapi`](.agents/skills/stack-fastapi/SKILL.md) | routes, dependencies, request/response models |
+-->
 
 ## Rules
 

@@ -1,8 +1,8 @@
 ---
-name: dev-cycle
+name: role-running-dev-cycle
 description: Orchestrates a change through Inception (spec, plan, test design) and Construction (implement, review, verify) using the role subagents in .agents/agents, with human approval gates and in-repo QA. Use when the user asks to build, add, fix or change anything non-trivial, or says "dev cycle" or "do it properly".
 metadata:
-  type: workflow
+  type: role
 ---
 # Dev cycle (orchestrator)
 
@@ -21,16 +21,16 @@ explorer ─► planner ─► qa-engineer(design) ─► GATE 1 ─► develope
 
 | Step | Agent | Skill(s) | Artifact | Gate to pass |
 | --- | --- | --- | --- | --- |
-| 1. Explore | `explorer` (one or more, parallel) | `exploring-codebase` | notes only | the relevant code and patterns are known |
-| 2. Spec + plan | `planner` | `writing-specs`, `planning-changes` | `specs/<id>/spec.md`, `plan.md` | every criterion is testable; open questions answered |
-| 3. Test design | `qa-engineer` (design) | `designing-test-cases` | `specs/<id>/test-cases.md` | every criterion has at least one test case |
+| 1. Explore | `explorer` (one or more, parallel) | `role-exploring-codebase` | notes only | the relevant code and patterns are known |
+| 2. Spec + plan | `planner` | `role-writing-specs`, `role-planning-changes` | `specs/<id>/spec.md`, `plan.md` | every criterion is testable; open questions answered |
+| 3. Test design | `qa-engineer` (design) | `role-designing-test-cases` | `specs/<id>/test-cases.md` | every criterion has at least one test case |
 | **Gate 1** | **human** | — | — | approves spec, plan and test cases |
-| 4. Implement | `developer` | `implementing-plans`, `writing-tests` | code + tests | format and lint pass after each task |
-| 5. Review | `code-reviewer` (+ `security-reviewer` in parallel when relevant) | `reviewing-code` | findings | no open blocker or major findings |
-| 6. Verify | `qa-engineer` (verify) | `verifying-changes` | `specs/<id>/qa-report.md` | every quality gate in `AGENTS.md` is green; each criterion has evidence |
+| 4. Implement | `developer` | `role-implementing-plans`, `role-writing-tests` | code + tests | format and lint pass after each task |
+| 5. Review | `code-reviewer` (+ `security-reviewer` in parallel when relevant) | `role-reviewing-code` | findings | no open blocker or major findings |
+| 6. Verify | `qa-engineer` (verify) | `role-verifying-changes` | `specs/<id>/qa-report.md` | every quality gate in `AGENTS.md` is green; each criterion has evidence |
 | **Gate 2** | **human** | — | — | reviews the qa-report and diff, then merges |
 
-On a failure with an unclear cause, send it to `debugger` (`debugging-systematically`), then resume.
+On a failure with an unclear cause, send it to `debugger` (`role-debugging-systematically`), then resume.
 
 ## Sizing (don't over-process)
 

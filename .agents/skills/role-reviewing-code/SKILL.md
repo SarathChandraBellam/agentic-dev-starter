@@ -1,5 +1,5 @@
 ---
-name: reviewing-code
+name: role-reviewing-code
 description: Reviews a diff or pull request for correctness, scope, design, tests, security and docs, and returns severity-ranked findings with a verdict. Use after implementing and before declaring done, or when asked to review code, a PR, a branch or a diff. Acts as the code-reviewer role; run it in a fresh subagent when possible; never edits files.
 metadata:
   type: role

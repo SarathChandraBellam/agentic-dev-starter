@@ -1,5 +1,5 @@
 ---
-name: planning-changes
+name: role-planning-changes
 description: Turns an approved spec into an implementation plan with design notes, ordered small tasks, files to touch, test strategy per acceptance criterion, and risks. Use after the spec exists and before writing code, or when asked to plan, design or break down work. Read-only.
 metadata:
   type: role
@@ -12,7 +12,7 @@ The plan says **how**. Save it as `specs/<id>-<slug>/plan.md`. **Don't edit sour
 
 ## Steps
 
-1. **Ground it in the code.** Use `explorer` findings, or the `exploring-codebase` skill. Name the existing pattern to follow.
+1. **Ground it in the code.** Use `explorer` findings, or the `role-exploring-codebase` skill. Name the existing pattern to follow.
 2. **Write design notes**, a short paragraph or a list of bullets: the components touched, the data or interface changes, and the
    alternatives you rejected and why. Use a diagram only if it helps.
 3. **Break the work into tasks.** Each task:
@@ -20,7 +20,7 @@ The plan says **how**. Save it as `specs/<id>-<slug>/plan.md`. **Don't edit sour
    - lists its files and the criteria it serves (for example `AC1, AC3`),
    - is concrete. No "TBD", "handle errors appropriately" or "add tests".
 4. **Set the test strategy.** For each criterion, choose the test level (unit, integration, contract or e2e) per the pyramid in
-   `designing-test-cases`. The qa-engineer turns this into test cases.
+   `role-designing-test-cases`. The qa-engineer turns this into test cases.
 5. **Add risks and rollback.** Cover migrations, feature flags, compatibility, and whether this can be reverted safely.
 6. **Self-check.** Every criterion maps to a task and a test level, and names are consistent across tasks.
 

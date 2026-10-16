@@ -1,5 +1,5 @@
 ---
-name: <verb-ing-noun>
+name: repo-<verb-ing>-<noun>
 description: <What procedure this performs in this repo>. Use when asked to <trigger phrases>.
 metadata:
   type: repo

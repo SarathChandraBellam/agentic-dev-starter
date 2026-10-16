@@ -1,11 +1,11 @@
 ---
-name: <language>-conventions
-description: <Language> conventions for this repo (layout, commands, typing, errors, tests). Use when writing, editing, reviewing or testing any <file extensions> file.
+name: stack-<tech>
+description: <Technology> conventions for this repo (layout, commands, typing, errors, tests). Use when writing, editing, reviewing or testing any <file extensions> file.
 metadata:
-  type: language
-  language: <language>
+  type: stack
+  technology: <technology>
 ---
-# <Language> conventions
+# <Technology> conventions (stack-<tech>)
 
 ## Layout
 - <where code and tests live, how modules are named>

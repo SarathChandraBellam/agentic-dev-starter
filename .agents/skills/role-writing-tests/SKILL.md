@@ -1,5 +1,5 @@
 ---
-name: writing-tests
+name: role-writing-tests
 description: Implements automated tests from designed test cases or acceptance criteria, deterministic and following repo conventions, and proves they fail without the change. Use when adding or fixing tests, writing a regression test, or automating test cases.
 metadata:
   type: role
@@ -8,7 +8,7 @@ metadata:
 ---
 # Writing tests
 
-1. **Follow the house style.** Match the existing tests' layout, naming and fixtures, and the `<language>-conventions` skill if one exists.
+1. **Follow the house style.** Match the existing tests' layout, naming and fixtures, and the `stack-<tech>` skill if one exists.
 2. **One behaviour per test**, named after the behaviour (`test_non_numeric_id_returns_400`). Reference the case ID in a comment
    (`# TC2 / AC2`).
 3. **Arrange, act, assert** with minimal setup. Keep shared setup in fixtures, not copy-paste.

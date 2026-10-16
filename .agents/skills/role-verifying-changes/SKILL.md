@@ -1,5 +1,5 @@
 ---
-name: verifying-changes
+name: role-verifying-changes
 description: Final in-repo QA gate. Runs every quality gate defined in AGENTS.md (format, lint, types, tests, coverage, security scans), maps each acceptance criterion to passing evidence, and writes a QA report. Use before declaring any change done, before opening a PR, or when asked to verify, QA or sign off.
 metadata:
   type: role

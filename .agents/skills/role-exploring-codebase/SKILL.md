@@ -1,5 +1,5 @@
 ---
-name: exploring-codebase
+name: role-exploring-codebase
 description: Maps the parts of a codebase relevant to a question (entry points, call flow, data model, tests, conventions) without editing anything, and returns file:line evidence. Use before planning or changing unfamiliar code, or when asked "where is", "how does", or "what uses".
 metadata:
   type: role
