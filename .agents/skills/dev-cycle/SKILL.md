@@ -1,44 +1,62 @@
 ---
 name: dev-cycle
-description: Runs the full plan → implement → review → test loop for a change until checks pass. Use when the user asks to build, add, fix or change something non-trivial, or says "dev cycle", "full cycle", or "do it properly".
+description: Orchestrates a change through Inception (spec, plan, test design) and Construction (implement, review, verify) using the role subagents in .agents/agents, with human approval gates and in-repo QA. Use when the user asks to build, add, fix or change anything non-trivial, or says "dev cycle" or "do it properly".
 metadata:
   type: workflow
 ---
-# Dev cycle: plan → implement → review → test
+# Dev cycle (orchestrator)
 
-Drive a change through four phases. Each phase has a **role skill**. Load it and follow it.
+You are the **orchestrator**. You plan the work, delegate it to subagents, check each gate, and talk to the human.
+This cycle follows the AI-driven development lifecycle: the AI proposes, the human approves at gates, artifacts live in the repo,
+and QA happens **before merge**, not after deployment.
 
-| Phase | Role | Skill | Exit gate |
-| --- | --- | --- | --- |
-| 1. Plan | planner | `planning-changes` | A plan with acceptance criteria, approved by the human for anything non-trivial |
-| 2. Implement | implementer | `implementing-plans` | Every plan step done, format and lint pass |
-| 3. Review | reviewer | `reviewing-code` | No open blocker or major findings |
-| 4. Test | tester | `testing-changes` | Every acceptance criterion has a passing test, and the full check command passes |
+## Flow
 
-When something fails and the cause isn't obvious, switch to `debugging-systematically`, then return to the phase you were in.
+```
+INCEPTION                                   CONSTRUCTION (one "bolt" per task batch)
+explorer ─► planner ─► qa-engineer(design) ─► GATE 1 ─► developer ─► code-reviewer ─┬─► qa-engineer(verify) ─► GATE 2 ─► done
+ (parallel ok)  spec+plan   test-cases.md    human        TDD          + security-   │      all gates green      human
+                                             approves                  reviewer      └─ blocker/fail ─► developer (max 3 loops)
+```
 
-## Running the roles
+| Step | Agent | Skill(s) | Artifact | Gate to pass |
+| --- | --- | --- | --- | --- |
+| 1. Explore | `explorer` (one or more, parallel) | `exploring-codebase` | notes only | the relevant code and patterns are known |
+| 2. Spec + plan | `planner` | `writing-specs`, `planning-changes` | `specs/<id>/spec.md`, `plan.md` | every criterion is testable; open questions answered |
+| 3. Test design | `qa-engineer` (design) | `designing-test-cases` | `specs/<id>/test-cases.md` | every criterion has at least one test case |
+| **Gate 1** | **human** | — | — | approves spec, plan and test cases |
+| 4. Implement | `developer` | `implementing-plans`, `writing-tests` | code + tests | format and lint pass after each task |
+| 5. Review | `code-reviewer` (+ `security-reviewer` in parallel when relevant) | `reviewing-code` | findings | no open blocker or major findings |
+| 6. Verify | `qa-engineer` (verify) | `verifying-changes` | `specs/<id>/qa-report.md` | every quality gate in `AGENTS.md` is green; each criterion has evidence |
+| **Gate 2** | **human** | — | — | reviews the qa-report and diff, then merges |
 
-- **If your agent can start subagents** (Claude Code, Codex, Gemini CLI, Cursor and Copilot all can), run **Review** in a
-  fresh subagent and tell it to use the `reviewing-code` skill. A reviewer that didn't write the code catches more. Planning
-  and testing may also run in subagents. Pass each subagent the goal, the plan, the diff or file paths, and the acceptance
-  criteria, because it can't see this conversation.
-- **Otherwise** run the phases yourself in order, and re-read the diff from scratch before reviewing it.
+On a failure with an unclear cause, send it to `debugger` (`debugging-systematically`), then resume.
 
-## Loop rules
+## Sizing (don't over-process)
 
-1. Size the task first:
-   - **Trivial** (typo, one-liner): skip the written plan, then implement, self-review and run checks.
-   - **Normal**: put the plan in the chat and wait for approval.
-   - **Large or risky** (cross-module, migrations, public API, security): write the plan to `.agents/work/<task-slug>/plan.md`
-     and wait for approval.
-2. Any blocker or major review finding, or any failing test, sends you back to **Implement**.
-3. After **3 loops** without converging, stop. Summarise what's blocking and ask the human. The plan is probably wrong.
-4. Never skip the gate checks. "Should work" is not done.
+| Size | Examples | Run |
+| --- | --- | --- |
+| **Trivial** | typo, config tweak, one-liner | steps 4 and 6 only, with inline notes and no `specs/` folder |
+| **Normal** | a feature, a known bug | all steps, with spec and plan kept short (one page) |
+| **Large or risky** | cross-module change, migration, public API, security | all steps, split into bolts of 3–5 tasks with Gate 1 per bolt |
+
+## Delegation rules
+
+1. **Brief every subagent fully.** It can't see this conversation. Give it the objective, the inputs (paths to the spec, plan and
+   diff), the expected output format, its boundaries (read-only or not), and when to stop.
+2. **Load the agent definition.** Read `.agents/agents/<name>.md` and pass its body as the subagent's instructions. If your CLI has
+   a native agent with the same name, use that instead.
+3. **Writes stay single-threaded.** Only one writer (`developer`, `qa-engineer` in automate mode, or `debugger`) at a time.
+   Read-only agents (`explorer`, reviewers) may run in parallel.
+4. **Review in a clean context.** Never review in the conversation that wrote the code.
+5. **Use the model tier.** Each agent's `metadata.tier` maps to your CLI's models. See *Model tiers* in `AGENTS.md`.
+6. **No subagents available?** Run the steps yourself in order, and re-read the diff from scratch before reviewing.
+
+## Loop limits
+
+A blocker or major finding, or a failing gate, sends the work back to **Implement**. After **3 loops**, stop. Report what's
+blocking and ask the human. The spec or plan is probably wrong.
 
 ## Finish with
 
-- **What changed**, as files and behaviour.
-- **Why**, linked to the acceptance criteria.
-- **How it was verified**: the commands you ran and the tail of their output.
-- **Follow-ups**: anything out of scope that you noticed.
+What changed · why (criterion IDs) · evidence (`qa-report.md` and the tail of the check output) · follow-ups.

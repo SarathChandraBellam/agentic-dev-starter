@@ -1,76 +1,72 @@
 # agentic-dev-starter
 
-A minimal GitHub template that makes any new repo ready for AI coding agents, built only on the two open
-standards the tools are converging on:
+A minimal GitHub template that makes a new repo ready for AI-assisted development, focused on the **developer** and
+**QA** personas, with quality built and proven **inside the repo** before merge.
 
-- **[AGENTS.md](https://agents.md)**: one instruction file at the root, the index for everything.
+It's built only on the open standards the tools are converging on:
+
+- **[AGENTS.md](https://agents.md)**: the single index for project rules, quality gates, agents and skills.
 - **[Agent Skills](https://agentskills.io/specification)**: reusable know-how in `.agents/skills/<name>/SKILL.md`.
+- **Subagents**: thin persona files in `.agents/agents/` that the main agent dispatches as an orchestrator.
 
-There are no CLI-specific folders, no generators and no sync scripts.
+There are no CLI-specific folders, generators or sync scripts.
 
 ```
-AGENTS.md                  # project rules + commands + the skills index (you own this)
+AGENTS.md            # index: project, commands, quality gates, agents + tiers, skills
 .agents/
-  skills/
-    dev-cycle/             # orchestrates plan → implement → review → test
-    planning-changes/      # role: planner
-    implementing-plans/    # role: implementer
-    reviewing-code/        # role: reviewer (+ references/security-checklist.md)
-    testing-changes/       # role: tester
-    debugging-systematically/  # role: debugger
-    writing-skills/        # repo: how to add skills (+ templates for role, repo and language skills)
-  work/                    # git-ignored scratch space for plans
+  agents/            # explorer · planner · qa-engineer · developer · code-reviewer · security-reviewer · debugger
+  skills/            # 12 skills (role, repo, and language once the stack is chosen)
+specs/               # per-change artifacts: spec.md · plan.md · test-cases.md · qa-report.md
 ```
+
+## The lifecycle
+
+The lifecycle is adapted from AWS's AI-Driven Development Lifecycle, Spec Kit and Kiro: the AI proposes, the human approves at gates,
+and the artifacts live in the repo.
+
+| Phase | Agents | Output | Gate |
+| --- | --- | --- | --- |
+| **Inception** | explorer → planner → qa-engineer (design) | spec with Given/When/Then criteria, plan, **test cases before code** | Gate 1: human approves |
+| **Construction** | developer (test-first) → code-reviewer (+ security) → qa-engineer (verify) | code, tests, findings, **QA report** | Gate 2: human reviews and merges |
+
+Two design rules come from what has worked in practice:
+- **One writer at a time.** Read-only agents (explorer, reviewers) may run in parallel.
+- **Review in a clean context**, by an agent that didn't write the code.
+
+## Personas and model tiers
+
+Agents declare a tier (`strong`, `balanced` or `fast`), not a model name, so the same files work under any orchestrator.
+`AGENTS.md` maps the tiers:
+- **strong** for planning, review and security,
+- **balanced** for the developer and QA,
+- **fast** for read-only exploration,
+- **inherit** when unsure.
 
 ## Quick start
 
 1. Click **Use this template**, then clone.
-2. Fill in **Project**, **Stack** and **Commands** in `AGENTS.md`.
-3. Ask your agent: *"We're using Python + FastAPI. Create the language skill."* It uses `writing-skills` to create
-   `.agents/skills/python-conventions/` from your real tooling and adds it to the index.
-4. Build things: *"Use the dev-cycle skill to add a health-check endpoint."*
+2. Fill in **Project**, **Stack**, **Commands** and **Quality gates** in `AGENTS.md`.
+3. Ask: *"Our stack is Python + FastAPI + pytest. Create the language skill."* (`writing-skills` creates `python-conventions`.)
+4. Ask: *"Use dev-cycle to add rate limiting to the login endpoint."*
 
-## Three kinds of skills
+## Compatibility
 
-| Type | What it holds | Shipped | Grows when |
+| Agent | Reads `AGENTS.md` | Discovers `.agents/skills` | Subagents |
 | --- | --- | --- | --- |
-| **Role** | How a role does its job, with a defined output | planner, implementer, reviewer, tester, debugger (+ `dev-cycle`) | a recurring kind of work needs its own checklist |
-| **Repo** | This repo's procedures (release, migrations, endpoints) | `writing-skills` | a procedure is explained a second time |
-| **Language** | Conventions for the chosen language or framework | none. The agent creates one when you pick the stack | a new language enters the repo |
+| Codex CLI | ✅ | ✅ | ✅ generic subagents |
+| GitHub Copilot CLI | ✅ | ✅ | ✅ |
+| Cursor | ✅ | ✅ | ✅ |
+| Gemini CLI | ⚠️ set `context.fileName: ["AGENTS.md"]` once | ✅ | ✅ |
+| Claude Code | ✅ (no `CLAUDE.md` present) | ⚠️ via the index in `AGENTS.md` ([#31005](https://github.com/anthropics/claude-code/issues/31005)) | ✅ |
 
-Roles are skills rather than CLI-specific agent files, so they work everywhere. If a CLI supports subagents, it runs the role in
-a fresh subagent with that skill. If not, the agent follows the skill itself. `AGENTS.md` says when to do which.
+`.agents/agents/` is a convention, not yet a standard. The orchestrator reads the file and passes it to a generic subagent, which
+works in every CLI above. To also register agents natively, copy or symlink them into your CLI's agents folder locally.
 
-## How each agent picks it up
+## Credits
 
-| Agent | Reads `AGENTS.md` | Discovers `.agents/skills` |
-| --- | --- | --- |
-| Codex CLI | ✅ | ✅ |
-| GitHub Copilot CLI | ✅ | ✅ |
-| Cursor | ✅ | ✅ |
-| Gemini CLI | ⚠️ reads `GEMINI.md` by default, so set `"context": {"fileName": ["AGENTS.md"]}` once in your Gemini settings | ✅ |
-| Claude Code | ✅ when there's no `CLAUDE.md` (v2.1.277+) | ⚠️ not yet ([issue #31005](https://github.com/anthropics/claude-code/issues/31005)), so it follows the index in `AGENTS.md` |
-
-The skills index in `AGENTS.md` is what keeps this portable. An agent that doesn't auto-discover skills still sees the list,
-with paths and "use when" triggers, and reads the `SKILL.md` it needs. When Claude Code and Gemini adopt the standard defaults,
-nothing in this repo has to change.
-
-## Adding a skill
-
-Ask your agent to "create a repo skill for cutting releases", or do it by hand:
-
-1. Copy a template from `.agents/skills/writing-skills/assets/` to `.agents/skills/<name>/SKILL.md`.
-2. Keep `name` equal to the folder name, and write a `description` that says what the skill does and when to use it.
-3. Add a row to the Skills index in `AGENTS.md`.
-
-Optionally validate with [`skills-ref`](https://github.com/agentskills/agentskills/tree/main/skills-ref) (`skills-ref validate .agents/skills/<name>`).
-To pull in community skills, the open-source [`npx skills`](https://github.com/vercel-labs/skills) installer writes to `.agents/skills/`.
-
-## Credits and further reading
-
-- [Agent Skills specification](https://agentskills.io/specification), the format these skills follow.
-- [obra/superpowers](https://github.com/obra/superpowers) (MIT): the plan → execute → review → verify workflow and systematic
-  debugging that inspired the role skills.
-- [anthropics/skills](https://github.com/anthropics/skills) (Apache-2.0): skill structure and the skill template.
-- [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills): official skills from Sentry, Trail of Bits,
-  Microsoft, Vercel and others, to add as repo or role skills.
+- [AWS AI-DLC](https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle) and [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows): inception and construction phases, approval gates, artifacts in the repo.
+- [GitHub Spec Kit](https://github.com/github/spec-kit) and [Kiro specs](https://kiro.dev/docs/specs/index): spec → plan → tasks.
+- [obra/superpowers](https://github.com/obra/superpowers) (MIT): writing plans, TDD, systematic debugging, verification before completion.
+- [Anthropic: Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) and [multi-agent research](https://www.anthropic.com/engineering/multi-agent-research-system): progressive disclosure, delegation briefs, effort scaling.
+- [Cognition: multi-agents that work](https://cognition.com/blog/multi-agents-working): clean-context review, read-only subagents, a single writer.
+- [OpenAI Codex best practices](https://developers.openai.com/codex/learn/best-practices): a short AGENTS.md, skills with one job each, subagents for bounded work.

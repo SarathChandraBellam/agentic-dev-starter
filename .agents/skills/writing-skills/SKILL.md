@@ -7,7 +7,7 @@ metadata:
 # Writing skills
 
 Skills live in `.agents/skills/<name>/SKILL.md` and follow the open [Agent Skills spec](https://agentskills.io/specification).
-After adding or renaming a skill, **add it to the Skills index in `AGENTS.md`**. That index is how every agent finds it.
+After adding or renaming a skill, **add it to the Skills index in `AGENTS.md`** (and agents to the Agents table). That index is how every agent finds it.
 
 ## Pick the type
 
@@ -16,6 +16,10 @@ After adding or renaming a skill, **add it to the Skills index in `AGENTS.md`**.
 | **Role** | *How* a role does its job: planner, reviewer, tester, ... | verb-ing phrase (`reviewing-code`) | [assets/role-skill.md](assets/role-skill.md) |
 | **Repo** | *This repo's* procedures: release, add an endpoint, migrations | verb-ing phrase (`adding-endpoints`) | [assets/repo-skill.md](assets/repo-skill.md) |
 | **Language** | Conventions for one language or framework | `<language>-conventions` | [assets/language-skill.md](assets/language-skill.md) |
+
+Need a **persona that runs in its own context** (a subagent the orchestrator dispatches)? Create `.agents/agents/<name>.md` from
+[assets/agent.md](assets/agent.md). Keep the agent thin: a role, a boundary, an output shape, and the skills it uses. Put the
+know-how in skills so humans and other agents can reuse it. Add the agent to the Agents table in `AGENTS.md`.
 
 Where else knowledge can go:
 - A one-line rule that applies to every task belongs in `AGENTS.md`, not in a skill.

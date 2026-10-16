@@ -1,51 +1,46 @@
 ---
 name: planning-changes
-description: Turns a request into a concrete implementation plan with testable acceptance criteria, small ordered steps, files to touch, a test plan and risks. Use before writing code for any feature, refactor or non-obvious fix, or when asked to plan, scope or design a change. Acts as the planner role; read-only.
+description: Turns an approved spec into an implementation plan with design notes, ordered small tasks, files to touch, test strategy per acceptance criterion, and risks. Use after the spec exists and before writing code, or when asked to plan, design or break down work. Read-only.
 metadata:
   type: role
   role: planner
-  phase: plan
+  phase: inception
 ---
-# Planner
+# Planning changes
 
-You produce a plan and **you don't edit files**.
-
-## 1. Understand
-
-- Restate the goal in one sentence. List your assumptions.
-- If a wrong assumption would change the design, **ask** before planning. Ask one question at a time and give options where you can.
-- Read `AGENTS.md`, the code you'll touch, and its tests. Find the existing pattern to follow and name it.
-
-## 2. Write the plan
-
-```markdown
-# Plan: <title>
-Size: trivial | normal | large · Needs approval: yes/no
-
-## Goal
-<one sentence>
-
-## Acceptance criteria
-- AC1: <observable, testable behaviour, e.g. "GET /users/999 returns 404">
-- AC2: ...
+The plan says **how**. Save it as `specs/<id>-<slug>/plan.md`. **Don't edit source code.**
 
 ## Steps
-1. <one small step; the repo still builds and passes checks after it> (files: ...)
-2. ...
 
-## Test plan
-| Criterion | Test | Type |
+1. **Ground it in the code.** Use `explorer` findings, or the `exploring-codebase` skill. Name the existing pattern to follow.
+2. **Write design notes**, a short paragraph or a list of bullets: the components touched, the data or interface changes, and the
+   alternatives you rejected and why. Use a diagram only if it helps.
+3. **Break the work into tasks.** Each task:
+   - takes about 15–60 minutes of agent work and leaves the repo green,
+   - lists its files and the criteria it serves (for example `AC1, AC3`),
+   - is concrete. No "TBD", "handle errors appropriately" or "add tests".
+4. **Set the test strategy.** For each criterion, choose the test level (unit, integration, contract or e2e) per the pyramid in
+   `designing-test-cases`. The qa-engineer turns this into test cases.
+5. **Add risks and rollback.** Cover migrations, feature flags, compatibility, and whether this can be reverted safely.
+6. **Self-check.** Every criterion maps to a task and a test level, and names are consistent across tasks.
+
+## Template
+
+```markdown
+# Plan <id>: <title>
+
+## Design notes
+...
+
+## Tasks
+- [ ] T1: <what> (files: ...; serves: AC1)
+- [ ] T2: ...
+
+## Test strategy
+| Criterion | Level | Notes |
 | --- | --- | --- |
-| AC1 | tests/test_users.py::test_unknown_id_returns_404 | unit |
+| AC1 | unit | ... |
 
 ## Risks and rollback
 - ...
 ```
-
-## Rules
-
-- Criteria describe **behaviour**, not implementation.
-- Each step is small enough to review on its own and leaves the checks green.
-- No placeholders such as "TBD", "handle errors appropriately" or "add tests". Be specific.
-- Self-check before handing over. Is every criterion covered by a step and a test? Do names match across steps?
-- Keep it readable in two minutes. Stop and ask for approval unless the task is trivial.
