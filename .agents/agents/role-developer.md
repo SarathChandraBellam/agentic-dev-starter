@@ -1,5 +1,5 @@
 ---
-name: developer
+name: role-developer
 description: Implements an approved plan task by task with test-first discipline and the smallest diff that satisfies each task. Use after the plan (and QA test cases) are approved. The only agent that edits production code.
 metadata:
   tier: balanced

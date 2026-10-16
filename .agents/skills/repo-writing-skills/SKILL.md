@@ -25,9 +25,20 @@ Naming rules:
 - Keep names to 64 characters or fewer, lowercase, and hyphenated. The folder name must equal `name` exactly.
 - Set `metadata.type` to match the prefix (`role`, `repo` or `stack`).
 
+## Agents use the same prefixes
+
 Need a **persona that runs in its own context** (a subagent the orchestrator dispatches)? Create `.agents/agents/<name>.md` from
-[assets/agent.md](assets/agent.md). Keep the agent thin: a role, a boundary, an output shape, and the skills it uses. Put the
-know-how in skills so humans and other agents can reuse it. Add the agent to the Agents table in `AGENTS.md`.
+[assets/agent.md](assets/agent.md) and name it with the same prefixes:
+
+| Prefix | Agent is | Examples |
+| --- | --- | --- |
+| `role-` | a generic persona usable in any project | `role-developer`, `role-qa-engineer`, `role-code-reviewer` |
+| `repo-` | an expert in **this project** (its intent, domain and rules) | `repo-domain-expert`, `repo-billing-expert` |
+| `stack-` | an expert in a language, framework or tool | `stack-python-reviewer`, `stack-react-tester` |
+
+Keep agents thin: a responsibility, a boundary, an output shape, and the skills they load. Put the know-how in skills so humans and
+other agents can reuse it. Add the agent to the Agents table in `AGENTS.md`. Create a `stack-` agent only when a generic `role-`
+agent plus a `stack-` skill isn't enough.
 
 Where else knowledge can go:
 - A one-line rule that applies to every task belongs in `AGENTS.md`, not in a skill.

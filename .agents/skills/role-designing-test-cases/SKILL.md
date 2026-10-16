@@ -3,7 +3,7 @@ name: role-designing-test-cases
 description: Designs test cases from acceptance criteria before code is written, covering positive, negative, boundary, state and error cases at the right test level (unit, integration, contract, e2e). Use after the spec and plan exist, or when asked for a test plan, test cases, QA scenarios or coverage of requirements.
 metadata:
   type: role
-  role: qa-engineer
+  role: role-qa-engineer
   phase: inception
 ---
 # Designing test cases (shift-left QA)

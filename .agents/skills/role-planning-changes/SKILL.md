@@ -3,7 +3,7 @@ name: role-planning-changes
 description: Turns an approved spec into an implementation plan with design notes, ordered small tasks, files to touch, test strategy per acceptance criterion, and risks. Use after the spec exists and before writing code, or when asked to plan, design or break down work. Read-only.
 metadata:
   type: role
-  role: planner
+  role: role-planner
   phase: inception
 ---
 # Planning changes
@@ -12,7 +12,7 @@ The plan says **how**. Save it as `specs/<id>-<slug>/plan.md`. **Don't edit sour
 
 ## Steps
 
-1. **Ground it in the code.** Use `explorer` findings, or the `role-exploring-codebase` skill. Name the existing pattern to follow.
+1. **Ground it in the code.** Use `role-explorer` findings, or the `role-exploring-codebase` skill. Name the existing pattern to follow.
 2. **Write design notes**, a short paragraph or a list of bullets: the components touched, the data or interface changes, and the
    alternatives you rejected and why. Use a diagram only if it helps.
 3. **Break the work into tasks.** Each task:

@@ -14,7 +14,8 @@ There are no CLI-specific folders, generators or sync scripts.
 ```
 AGENTS.md            # index: project, commands, quality gates, agents + tiers, skills
 .agents/
-  agents/            # explorer · planner · qa-engineer · developer · code-reviewer · security-reviewer · debugger
+  agents/            # role-explorer · role-planner · role-qa-engineer · role-developer · role-code-reviewer ·
+                     # role-security-reviewer · role-debugger · repo-domain-expert  (stack-* agents added per stack)
   skills/            # role-* (11) · repo-* (4: intent, knowledge, review rules, writing skills) · stack-* (created when the stack is chosen)
 specs/               # per-change artifacts: spec.md · plan.md · test-cases.md · qa-report.md
 ```

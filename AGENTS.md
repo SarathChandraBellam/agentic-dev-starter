@@ -42,28 +42,37 @@ These run **in the repo, before merge**. `role-verifying-changes` runs all of th
 For anything non-trivial, the main agent acts as **orchestrator** and follows
 [`role-running-dev-cycle`](.agents/skills/role-running-dev-cycle/SKILL.md):
 
-1. **Inception**: `explorer` maps the code, `planner` writes the spec and plan, and `qa-engineer` designs test cases from the
+1. **Inception**: `role-explorer` maps the code, `role-planner` writes the spec and plan, and `role-qa-engineer` designs test cases from the
    acceptance criteria. **Gate 1:** the human approves.
-2. **Construction**: `developer` implements test-first, `code-reviewer` (and `security-reviewer` when relevant) reviews in a clean
-   context, and `qa-engineer` verifies all quality gates. **Gate 2:** the human reviews the QA report and merges.
+2. **Construction**: `role-developer` implements test-first, `role-code-reviewer` (and `role-security-reviewer` when relevant) reviews in a clean
+   context, and `role-qa-engineer` verifies all quality gates. **Gate 2:** the human reviews the QA report and merges.
 
 Artifacts live in `specs/<id>-<slug>/`: `spec.md`, `plan.md`, `test-cases.md`, `qa-report.md`.
 Trivial changes skip the specs and still pass the quality gates.
 
 ## Agents (subagents the orchestrator dispatches)
 
+Agents use the same prefixes as skills:
+- **`role-`**: a generic persona.
+- **`repo-`**: an expert in this project.
+- **`stack-`**: an expert in a language or framework, for example `stack-python-reviewer`, created once the stack is chosen.
+
 To dispatch an agent, read `.agents/agents/<name>.md` and start a subagent with its body as instructions. If your CLI has no
 subagents, play the role yourself. Only **one writer at a time**. Read-only agents may run in parallel.
 
 | Agent | Phase | Tier | Access | Skills |
 | --- | --- | --- | --- | --- |
-| [`explorer`](.agents/agents/explorer.md) | inception | fast | read-only | role-exploring-codebase, repo-domain-knowledge |
-| [`planner`](.agents/agents/planner.md) | inception | strong | read-only | role-writing-specs, role-planning-changes, repo-project-intent, repo-domain-knowledge |
-| [`qa-engineer`](.agents/agents/qa-engineer.md) | inception + construction | balanced | tests only | role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests, repo-domain-knowledge |
-| [`developer`](.agents/agents/developer.md) | construction | balanced | read-write | role-implementing-plans, role-writing-tests, repo-domain-knowledge |
-| [`code-reviewer`](.agents/agents/code-reviewer.md) | construction | strong | read-only | role-reviewing-code, repo-review-rules, repo-project-intent |
-| [`security-reviewer`](.agents/agents/security-reviewer.md) | construction | strong | read-only | role-reviewing-code, repo-review-rules |
-| [`debugger`](.agents/agents/debugger.md) | any | strong | read-write | role-debugging-systematically, role-writing-tests |
+| [`role-explorer`](.agents/agents/role-explorer.md) | inception | fast | read-only | role-exploring-codebase, repo-domain-knowledge |
+| [`role-planner`](.agents/agents/role-planner.md) | inception | strong | read-only | role-writing-specs, role-planning-changes, repo-project-intent, repo-domain-knowledge |
+| [`role-qa-engineer`](.agents/agents/role-qa-engineer.md) | inception + construction | balanced | tests only | role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests, repo-domain-knowledge |
+| [`role-developer`](.agents/agents/role-developer.md) | construction | balanced | read-write | role-implementing-plans, role-writing-tests, repo-domain-knowledge |
+| [`role-code-reviewer`](.agents/agents/role-code-reviewer.md) | construction | strong | read-only | role-reviewing-code, repo-review-rules, repo-project-intent |
+| [`role-security-reviewer`](.agents/agents/role-security-reviewer.md) | construction | strong | read-only | role-reviewing-code, repo-review-rules |
+| [`role-debugger`](.agents/agents/role-debugger.md) | any | strong | read-write | role-debugging-systematically, role-writing-tests |
+| [`repo-domain-expert`](.agents/agents/repo-domain-expert.md) | inception + review | strong | read-only | repo-project-intent, repo-domain-knowledge, repo-review-rules |
+
+<!-- stack- agents: add when the stack is chosen and generic roles aren't enough, e.g.
+| [`stack-python-reviewer`](.agents/agents/stack-python-reviewer.md) | review | strong | read-only | role-reviewing-code, stack-python | -->
 
 ### Model tiers
 

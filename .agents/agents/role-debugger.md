@@ -1,5 +1,5 @@
 ---
-name: debugger
+name: role-debugger
 description: Root-causes a failing test, bug or unexpected behaviour before changing code, then applies a minimal fix with a regression test. Use when a failure's cause isn't obvious or a first fix didn't work.
 metadata:
   tier: strong

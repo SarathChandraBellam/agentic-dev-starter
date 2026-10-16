@@ -3,7 +3,7 @@ name: role-implementing-plans
 description: Executes an approved plan step by step with the smallest diff that satisfies each step, keeping changes in scope and checks green. Use when a plan exists and it's time to write the code, or when asked to implement, build or apply a plan. Acts as the developer role.
 metadata:
   type: role
-  role: developer
+  role: role-developer
   phase: implement
 ---
 # Implementing plans (developer)

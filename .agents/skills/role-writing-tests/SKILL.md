@@ -3,7 +3,7 @@ name: role-writing-tests
 description: Implements automated tests from designed test cases or acceptance criteria, deterministic and following repo conventions, and proves they fail without the change. Use when adding or fixing tests, writing a regression test, or automating test cases.
 metadata:
   type: role
-  role: qa-engineer
+  role: role-qa-engineer
   phase: construction
 ---
 # Writing tests

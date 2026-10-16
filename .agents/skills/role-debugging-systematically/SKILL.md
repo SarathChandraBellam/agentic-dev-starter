@@ -3,7 +3,7 @@ name: role-debugging-systematically
 description: Finds the root cause of a bug, failing test or unexpected behaviour before changing code, then fixes it with a regression test. Use when something fails and the cause isn't obvious, when a fix didn't work, or when asked to debug, investigate or troubleshoot. Acts as the debugger role.
 metadata:
   type: role
-  role: debugger
+  role: role-debugger
 ---
 # Debugger
 

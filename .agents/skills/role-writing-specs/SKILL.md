@@ -3,7 +3,7 @@ name: role-writing-specs
 description: Writes a feature or bug spec with problem, scope, non-goals and testable Given/When/Then acceptance criteria, plus open questions. Use at the start of any non-trivial change, or when asked for requirements, user stories, acceptance criteria or a spec.
 metadata:
   type: role
-  role: planner
+  role: role-planner
   phase: inception
 ---
 # Writing specs

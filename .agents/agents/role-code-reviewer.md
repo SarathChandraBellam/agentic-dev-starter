@@ -1,5 +1,5 @@
 ---
-name: code-reviewer
+name: role-code-reviewer
 description: Clean-context reviewer of a diff against its spec and plan, covering correctness, scope, design, test quality and docs. Use after the developer finishes and before verification. Must not share context with the agent that wrote the code. Read-only.
 metadata:
   tier: strong

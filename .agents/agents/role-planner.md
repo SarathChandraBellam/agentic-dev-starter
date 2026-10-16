@@ -1,5 +1,5 @@
 ---
-name: planner
+name: role-planner
 description: Turns a request into a spec (requirements + Given/When/Then acceptance criteria) and an implementation plan (design notes + ordered tasks + test strategy). Use at the start of any non-trivial change. Read-only; asks clarifying questions instead of guessing.
 metadata:
   tier: strong

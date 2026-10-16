@@ -21,16 +21,19 @@ explorer ─► planner ─► qa-engineer(design) ─► GATE 1 ─► develope
 
 | Step | Agent | Skill(s) | Artifact | Gate to pass |
 | --- | --- | --- | --- | --- |
-| 1. Explore | `explorer` (one or more, parallel) | `role-exploring-codebase` | notes only | the relevant code and patterns are known |
-| 2. Spec + plan | `planner` | `role-writing-specs`, `role-planning-changes` | `specs/<id>/spec.md`, `plan.md` | every criterion is testable; open questions answered |
-| 3. Test design | `qa-engineer` (design) | `role-designing-test-cases` | `specs/<id>/test-cases.md` | every criterion has at least one test case |
+| 1. Explore | `role-explorer` (one or more, parallel) | `role-exploring-codebase` | notes only | the relevant code and patterns are known |
+| 2. Spec + plan | `role-planner` | `role-writing-specs`, `role-planning-changes` | `specs/<id>/spec.md`, `plan.md` | every criterion is testable; open questions answered |
+| 3. Test design | `role-qa-engineer` (design) | `role-designing-test-cases` | `specs/<id>/test-cases.md` | every criterion has at least one test case |
 | **Gate 1** | **human** | — | — | approves spec, plan and test cases |
-| 4. Implement | `developer` | `role-implementing-plans`, `role-writing-tests` | code + tests | format and lint pass after each task |
-| 5. Review | `code-reviewer` (+ `security-reviewer` in parallel when relevant) | `role-reviewing-code` | findings | no open blocker or major findings |
-| 6. Verify | `qa-engineer` (verify) | `role-verifying-changes` | `specs/<id>/qa-report.md` | every quality gate in `AGENTS.md` is green; each criterion has evidence |
+| 4. Implement | `role-developer` | `role-implementing-plans`, `role-writing-tests` | code + tests | format and lint pass after each task |
+| 5. Review | `role-code-reviewer` (+ `role-security-reviewer` in parallel when relevant) | `role-reviewing-code` | findings | no open blocker or major findings |
+| 6. Verify | `role-qa-engineer` (verify) | `role-verifying-changes` | `specs/<id>/qa-report.md` | every quality gate in `AGENTS.md` is green; each criterion has evidence |
 | **Gate 2** | **human** | — | — | reviews the qa-report and diff, then merges |
 
-On a failure with an unclear cause, send it to `debugger` (`role-debugging-systematically`), then resume.
+When a request or spec touches business rules, product decisions or trade-offs, ask `repo-domain-expert` to check it against
+the project's intent and knowledge (read-only, so it can run in parallel with planning or review).
+
+On a failure with an unclear cause, send it to `role-debugger` (`role-debugging-systematically`), then resume.
 
 ## Sizing (don't over-process)
 
@@ -46,8 +49,8 @@ On a failure with an unclear cause, send it to `debugger` (`role-debugging-syste
    diff), the expected output format, its boundaries (read-only or not), and when to stop.
 2. **Load the agent definition.** Read `.agents/agents/<name>.md` and pass its body as the subagent's instructions. If your CLI has
    a native agent with the same name, use that instead.
-3. **Writes stay single-threaded.** Only one writer (`developer`, `qa-engineer` in automate mode, or `debugger`) at a time.
-   Read-only agents (`explorer`, reviewers) may run in parallel.
+3. **Writes stay single-threaded.** Only one writer (`role-developer`, `role-qa-engineer` in automate mode, or `role-debugger`) at a time.
+   Read-only agents (`role-explorer`, reviewers) may run in parallel.
 4. **Review in a clean context.** Never review in the conversation that wrote the code.
 5. **Use the model tier.** Each agent's `metadata.tier` maps to your CLI's models. See *Model tiers* in `AGENTS.md`.
 6. **No subagents available?** Run the steps yourself in order, and re-read the diff from scratch before reviewing.

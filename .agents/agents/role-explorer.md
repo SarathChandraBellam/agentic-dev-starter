@@ -1,5 +1,5 @@
 ---
-name: explorer
+name: role-explorer
 description: Read-only codebase scout. Use to find where something lives, how a flow works, which tests cover it, and what patterns to follow, before planning or coding. Returns a compact map with file:line references. Safe to run several in parallel.
 metadata:
   tier: fast
