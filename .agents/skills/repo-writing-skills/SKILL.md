@@ -16,11 +16,12 @@ Every skill name starts with its type, so the kind is obvious in any skill list 
 | Prefix | Type | Encodes | Example names | Template |
 | --- | --- | --- | --- | --- |
 | `role-` | **Role** | *How* a persona does its job, with a defined output | `role-reviewing-code`, `role-designing-test-cases` | [assets/role-skill.md](assets/role-skill.md) |
-| `repo-` | **Repo** (project) | *This repo's* procedures | `repo-adding-endpoints`, `repo-running-migrations`, `repo-cutting-releases` | [assets/repo-skill.md](assets/repo-skill.md) |
+| `repo-` | **Repo** (= this project) | Everything specific to this project: **intent** (goals, principles, decisions), **knowledge** (domain, glossary, architecture), **review rules**, and **procedures** | `repo-project-intent`, `repo-domain-knowledge`, `repo-review-rules`, `repo-adding-endpoints` | [assets/repo-skill.md](assets/repo-skill.md) |
 | `stack-` | **Stack** (language, framework, tool) | Conventions for a technology *as used in this repo* | `stack-python`, `stack-fastapi`, `stack-react`, `stack-postgres` | [assets/stack-skill.md](assets/stack-skill.md) |
 
 Naming rules:
-- Use `<prefix>-<verb-ing>-<noun>` for role and repo skills (`role-writing-tests`), and `stack-<technology>` for stack skills.
+- Role skills and repo *procedures* use `<prefix>-<verb-ing>-<noun>` (`role-writing-tests`, `repo-cutting-releases`).
+  Repo *knowledge*, *intent* and *rules* use a noun (`repo-domain-knowledge`, `repo-review-rules`). Stack skills use `stack-<technology>`.
 - Keep names to 64 characters or fewer, lowercase, and hyphenated. The folder name must equal `name` exactly.
 - Set `metadata.type` to match the prefix (`role`, `repo` or `stack`).
 
@@ -38,7 +39,10 @@ Where else knowledge can go:
   tooling first (`pyproject.toml`, `package.json`, linter configs). Then write the conventions that are *true for this repo*:
   layout, commands, typing, error handling, test idioms. Make one skill per language, and give a framework its own skill (`stack-fastapi`)
   only if it has many rules of its own.
-- **Repo skill:** create it the second time you have to explain or rediscover the same multi-step procedure.
+- **Repo skill:** keep the three shipped ones current: `repo-project-intent` (why), `repo-domain-knowledge` (what) and
+  `repo-review-rules` (project checks). Propose an edit when you learn something durable. Create a new repo procedure skill the
+  second time you explain or rediscover the same multi-step procedure. Split a knowledge skill when it grows past about 300 lines,
+  for example `repo-billing-knowledge`.
 - **Role skill:** create it when a recurring kind of work needs its own checklist and output format, for example a migrations
   reviewer or an accessibility auditor.
 

@@ -4,7 +4,7 @@ description: Turns a request into a spec (requirements + Given/When/Then accepta
 metadata:
   tier: strong
   access: read-only
-  skills: role-writing-specs, role-planning-changes
+  skills: role-writing-specs, role-planning-changes, repo-project-intent, repo-domain-knowledge
 ---
 You are the **planner**: the Inception phase.
 

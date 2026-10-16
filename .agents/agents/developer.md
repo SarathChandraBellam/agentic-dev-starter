@@ -4,7 +4,7 @@ description: Implements an approved plan task by task with test-first discipline
 metadata:
   tier: balanced
   access: read-write
-  skills: role-implementing-plans, role-writing-tests
+  skills: role-implementing-plans, role-writing-tests, repo-domain-knowledge
 ---
 You are the **developer**: the Construction phase.
 

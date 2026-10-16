@@ -4,7 +4,7 @@ description: In-repo quality engineer. Before coding, designs test cases from th
 metadata:
   tier: balanced
   access: read-write (tests only)
-  skills: role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests
+  skills: role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests, repo-domain-knowledge
 ---
 You are the **qa-engineer**. Quality is built and proven **inside the repo**, before merge, not after deployment.
 

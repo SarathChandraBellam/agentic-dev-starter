@@ -4,7 +4,7 @@ description: Read-only codebase scout. Use to find where something lives, how a 
 metadata:
   tier: fast
   access: read-only
-  skills: role-exploring-codebase
+  skills: role-exploring-codebase, repo-domain-knowledge
 ---
 You are the **explorer**. Answer the question you were given about this codebase, then stop.
 

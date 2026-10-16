@@ -5,7 +5,7 @@ This file is the **index**. Project rules live here, personas live in `.agents/a
 
 ## Project
 
-<!-- Fill in: what this project does, who uses it, the main components. -->
+<!-- Fill in: one or two sentences. Details live in repo-project-intent and repo-domain-knowledge. -->
 _TBD_
 
 ## Stack
@@ -57,12 +57,12 @@ subagents, play the role yourself. Only **one writer at a time**. Read-only agen
 
 | Agent | Phase | Tier | Access | Skills |
 | --- | --- | --- | --- | --- |
-| [`explorer`](.agents/agents/explorer.md) | inception | fast | read-only | role-exploring-codebase |
-| [`planner`](.agents/agents/planner.md) | inception | strong | read-only | role-writing-specs, role-planning-changes |
-| [`qa-engineer`](.agents/agents/qa-engineer.md) | inception + construction | balanced | tests only | role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests |
-| [`developer`](.agents/agents/developer.md) | construction | balanced | read-write | role-implementing-plans, role-writing-tests |
-| [`code-reviewer`](.agents/agents/code-reviewer.md) | construction | strong | read-only | role-reviewing-code |
-| [`security-reviewer`](.agents/agents/security-reviewer.md) | construction | strong | read-only | role-reviewing-code |
+| [`explorer`](.agents/agents/explorer.md) | inception | fast | read-only | role-exploring-codebase, repo-domain-knowledge |
+| [`planner`](.agents/agents/planner.md) | inception | strong | read-only | role-writing-specs, role-planning-changes, repo-project-intent, repo-domain-knowledge |
+| [`qa-engineer`](.agents/agents/qa-engineer.md) | inception + construction | balanced | tests only | role-designing-test-cases, role-writing-tests, role-verifying-changes, role-fixing-flaky-tests, repo-domain-knowledge |
+| [`developer`](.agents/agents/developer.md) | construction | balanced | read-write | role-implementing-plans, role-writing-tests, repo-domain-knowledge |
+| [`code-reviewer`](.agents/agents/code-reviewer.md) | construction | strong | read-only | role-reviewing-code, repo-review-rules, repo-project-intent |
+| [`security-reviewer`](.agents/agents/security-reviewer.md) | construction | strong | read-only | role-reviewing-code, repo-review-rules |
 | [`debugger`](.agents/agents/debugger.md) | any | strong | read-write | role-debugging-systematically, role-writing-tests |
 
 ### Model tiers
@@ -80,7 +80,7 @@ If unsure, **inherit the orchestrator's model**. Escalate a task to **strong** a
 ## Skills
 
 Skills follow the open [Agent Skills spec](https://agentskills.io/specification). Each name starts with its type:
-**`role-`** (how a persona works), **`repo-`** (this project's procedures), and **`stack-`** (conventions for the language,
+**`role-`** (how a persona works), **`repo-`** (everything specific to this project: intent, knowledge, review rules, procedures), and **`stack-`** (conventions for the language,
 framework or tools). If your agent doesn't load them automatically,
 read the matching `SKILL.md` before that kind of task.
 
@@ -100,14 +100,19 @@ read the matching `SKILL.md` before that kind of task.
 | [`role-fixing-flaky-tests`](.agents/skills/role-fixing-flaky-tests/SKILL.md) | qa-engineer | intermittent or CI-only test failures |
 | [`role-debugging-systematically`](.agents/skills/role-debugging-systematically/SKILL.md) | debugger | failures whose cause isn't obvious |
 
-### Repo skills: this repo's procedures
+### Repo skills: everything specific to this project
 
-| Skill | Use when |
-| --- | --- |
-| [`repo-writing-skills`](.agents/skills/repo-writing-skills/SKILL.md) | adding or changing a skill or an agent |
+| Skill | Kind | Use when |
+| --- | --- | --- |
+| [`repo-project-intent`](.agents/skills/repo-project-intent/SKILL.md) | intent | planning or reviewing; weighing trade-offs; checking goals, non-goals, principles and decisions |
+| [`repo-domain-knowledge`](.agents/skills/repo-domain-knowledge/SKILL.md) | knowledge | business terms, core entities, architecture, integrations, gotchas |
+| [`repo-review-rules`](.agents/skills/repo-review-rules/SKILL.md) | review | every review: this project's boundaries, required and banned patterns, budgets |
+| [`repo-writing-skills`](.agents/skills/repo-writing-skills/SKILL.md) | procedure | adding or changing a skill or an agent |
 
-<!-- Add repo skills as procedures emerge (e.g. repo-adding-endpoints, repo-running-migrations, repo-cutting-releases).
-     Rule: the second time a multi-step procedure is explained, make it a repo skill. -->
+Fill in the first three early. Agents propose updates as they learn, and a human approves them.
+
+<!-- Add more as they emerge: procedures (repo-adding-endpoints, repo-cutting-releases) or knowledge splits (repo-billing-knowledge).
+     Rule: the second time something is explained, make it a repo skill. -->
 
 ### Stack skills: language, framework and tool conventions
 

@@ -13,6 +13,8 @@ as `specs/<id>-<slug>/spec.md`. For `<id>`, use the next free number, or the iss
 
 ## Steps
 
+0. **Load project context.** Read `repo-project-intent` (goals, non-goals, principles, constraints) and `repo-domain-knowledge`
+   (glossary, business rules). Flag any conflict with a non-goal or constraint, and use the glossary's terms.
 1. **Elaborate before writing.** List your assumptions and questions. Ask the human the ones that would change the
    scope or behaviour, one at a time and with options. Don't invent business rules.
 2. **Write the problem and goal** in two or three sentences each.

@@ -7,7 +7,7 @@ metadata:
 ---
 # Exploring the codebase
 
-1. **Start from the question.** Write down exactly what you need to know.
+1. **Start from the question.** Write down exactly what you need to know. Read `repo-domain-knowledge` first for the glossary and architecture map.
 2. **Search wide, then read narrow.** Grep for symbols, routes, config keys and error strings, then read only the files that matter.
 3. **Read the tests early.** They document the real behaviour and edge cases.
 4. **Follow one flow end to end**: entry point → logic → data → output.

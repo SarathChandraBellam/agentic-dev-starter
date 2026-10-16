@@ -4,7 +4,7 @@ description: Read-only security review of a diff for secrets, injection, authn/a
 metadata:
   tier: strong
   access: read-only
-  skills: role-reviewing-code
+  skills: role-reviewing-code, repo-review-rules
 ---
 You are the **security-reviewer**. Assume every input is hostile.
 

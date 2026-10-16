@@ -1,8 +1,9 @@
 ---
 name: repo-<verb-ing>-<noun>
-description: <What procedure this performs in this repo>. Use when asked to <trigger phrases>.
+description: <What project-specific procedure, knowledge or rule this holds>. Use when <trigger phrases>.
 metadata:
   type: repo
+  kind: procedure | knowledge | intent | review
 ---
 # <Procedure name>
 
