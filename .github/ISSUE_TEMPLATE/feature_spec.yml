@@ -1,0 +1,58 @@
+name: Feature / Spec Proposal
+description: Propose a new feature or change — feeds directly into specs/<id>-<slug>/spec.md.
+title: "[Spec]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe **what** and **why** (not implementation details). Once approved, this issue feeds directly into `specs/<id>-<slug>/spec.md` via `role-writing-specs`.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What problem does this solve, and what is the desired outcome when done?
+      placeholder: In 2–3 sentences, describe the problem and target outcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: User / Context
+      description: Who is affected, how do they hit this today, and any relevant domain context or links?
+      placeholder: e.g., API consumers hitting /login; related PRs, docs, or domain terms.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Observable, independent criteria in Given/When/Then format (include unhappy/error paths).
+      placeholder: |
+        - **AC1**: Given <context>, when <action>, then <observable result>.
+        - **AC2**: Given <context>, when <invalid input>, then <error behaviour>.
+    validations:
+      required: true
+
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Non-Goals
+      description: What is explicitly out of scope to prevent scope creep?
+      placeholder: |
+        - Out of scope item 1
+        - Out of scope item 2
+    validations:
+      required: false
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints & Non-Functional Requirements
+      description: Performance, security, accessibility, compatibility, or architectural constraints (if any).
+      placeholder: e.g., p95 latency < 200 ms, backwards-compatible API, no new runtime dependencies.
+    validations:
+      required: false

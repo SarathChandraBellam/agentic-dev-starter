@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    name: Detect stack
+    runs-on: ubuntu-latest
+    outputs:
+      has_python: ${{ steps.check.outputs.has_python }}
+      has_ts: ${{ steps.check.outputs.has_ts }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: check
+        name: Check stack manifests
+        run: |
+          if [ -f pyproject.toml ] || [ -f requirements.txt ]; then
+            echo "has_python=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_python=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if [ -f package.json ]; then
+            echo "has_ts=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_ts=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  python-ci:
+    name: Python CI
+    needs: detect
+    if: ${{ needs.detect.outputs.has_python == 'true' }}
+    uses: SarathChandraBellam/.github/.github/workflows/reusable-python-ci.yml@main
+    # Optional overrides:
+    # with:
+    #   python-version: "3.12"
+    #   working-directory: "."
+
+  ts-ci:
+    name: TypeScript CI
+    needs: detect
+    if: ${{ needs.detect.outputs.has_ts == 'true' }}
+    uses: SarathChandraBellam/.github/.github/workflows/reusable-ts-ci.yml@main
+    # Optional overrides:
+    # with:
+    #   node-version: "22"
+    #   working-directory: "."

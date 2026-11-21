@@ -1,0 +1,54 @@
+name: Bug Report
+description: Report unexpected behaviour with reproduction steps so it can be verified and fixed with a regression test.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Provide concrete reproduction steps and observable expected vs. actual behaviour. Bug fixes require a regression test confirming the reproduction no longer fails.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: A concise description of the bug and its impact.
+      placeholder: What is broken and who/what is affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro_steps
+    attributes:
+      label: Reproduction Steps
+      description: Minimal, repeatable steps (or commands/inputs) to trigger the bug.
+      placeholder: |
+        1. Run `...`
+        2. Send / click `...`
+        3. Observe error `...`
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_vs_actual
+    attributes:
+      label: Expected vs Actual Behaviour
+      description: State what should happen and what actually happens (include error messages, status codes, or logs — never paste secrets).
+      placeholder: |
+        **Expected:** ...
+
+        **Actual:** ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, runtime/language version, commit SHA or release tag, and relevant configuration.
+      placeholder: |
+        - OS:
+        - Runtime / version:
+        - Commit / version:
+    validations:
+      required: false

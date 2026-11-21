@@ -17,6 +17,11 @@ AGENTS.md            # index: project, commands, quality gates, agents + tiers, 
   agents/            # role-explorer · role-planner · role-qa-engineer · role-developer · role-code-reviewer ·
                      # role-security-reviewer · role-debugger · repo-domain-expert  (stack-* agents added per stack)
   skills/            # role-* (11) · repo-* (4: intent, knowledge, review rules, writing skills) · stack-* (created when the stack is chosen)
+.github/
+  workflows/ci.yml   # auto-detects Python/TS manifests and calls shared reusable CI workflows
+  dependabot.yml     # weekly grouped updates for github-actions (+ commented uv / npm blocks)
+  ISSUE_TEMPLATE/    # feature_spec.yml · bug_report.yml · config.yml
+  PULL_REQUEST_TEMPLATE.md
 specs/               # per-change artifacts: spec.md · plan.md · test-cases.md · qa-report.md
 ```
 
@@ -50,6 +55,15 @@ Agents declare a tier (`strong`, `balanced` or `fast`), not a model name, so the
    (`repo-project-intent`, `repo-domain-knowledge`, `repo-review-rules`), or ask an agent to draft them for you to approve.
 3. Ask: *"Our stack is Python + FastAPI + pytest. Create the stack skills."* (`repo-writing-skills` creates `stack-python`, and `stack-fastapi` if needed.)
 4. Ask: *"Use role-running-dev-cycle to add rate limiting to the login endpoint."*
+
+## GitHub workflows & templates
+
+The `.github/` folder comes ready for repos spawned from this template:
+
+- **CI (`.github/workflows/ci.yml`)**: runs on pushes to `main` and pull requests, detects `pyproject.toml`/`requirements.txt` and `package.json`, and conditionally calls the shared reusable Python and TypeScript CI workflows (`SarathChandraBellam/.github`). Works out of the box on empty, Python, TypeScript, or polyglot repos.
+- **Dependabot (`.github/dependabot.yml`)**: active weekly grouped updates for `github-actions`, with ready-to-uncomment grouped blocks for `uv` (Python) and `npm` (TypeScript) once you pick a stack.
+- **Issue Forms (`.github/ISSUE_TEMPLATE/`)**: structured forms for feature/spec proposals (`feature_spec.yml`, feeding directly into `specs/<id>-<slug>/spec.md`) and bug reports (`bug_report.yml`), with blank issues enabled.
+- **PR template (`.github/PULL_REQUEST_TEMPLATE.md`)**: captures summary, spec/issue references, QA gate evidence from `qa-report.md`, and the test/review/security checklist.
 
 ## Compatibility
 
