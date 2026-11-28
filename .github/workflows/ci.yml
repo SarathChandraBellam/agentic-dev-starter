@@ -21,7 +21,7 @@ jobs:
       has_python: ${{ steps.check.outputs.has_python }}
       has_ts: ${{ steps.check.outputs.has_ts }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - id: check
         name: Check stack manifests
